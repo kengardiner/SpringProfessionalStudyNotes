@@ -108,12 +108,12 @@ Spring provides you with a web-aware implementation of the ApplicationContext in
 
   
 
-  ```
+ ```
 ApplicationContext context = new FileSystemXmlApplicationContext("c:/knight.xml"); 
 ApplicationContext context = new ClassPathXmlApplicationContext("knight.xml"); 
 ApplicationContext context = new AnnotationConfigApplicationContext(com.springinaction.knights.config.KnightConfig.class);
-  ```
-************************************************
+ ```
+  
 ## Can you describe the lifecycle of a Spring Bean in an ApplicationContext?
 ![](./StudyNoteImages/1_1.png)
 
@@ -127,7 +127,6 @@ BeanNameAware interface if any bean implements it.
 BeanFactoryAware if any bean implements it.
 7. Spring passes the reference of the application context itself to the
 setApplicationContext() method of ApplicationContextAware if any bean implements it.
-
 8. BeanPostProcessor is an interface, and Spring allows you to implement it with your bean, and modifies the instance of the bean before the initializer is invoked in the Spring bean container by calling its postProcessBeforeInitialization().
 9. If your bean implements the InitializingBean interface, Spring calls its afterPropertiesSet() method to initialize any process or loading resource for your application. There are other methods to achieve this step, for example, you can use the init-method of the <bean> tag, the initMethod attribute of the @Bean annotation, and JSR 250's @PostConstruct annotation.
 10. BeanPostProcessor is an interface, and spring allows you to implement it with your bean. It modifies the instance of the bean after the initializer is invoked in the spring bean container by calling its postProcessAfterInitialization().
@@ -706,3 +705,4 @@ Expressions in @Value annotations are of two types:
 
 - Expressions starting with $. Such expressions reference a property name in the application’s environment. These expressions are evaluated by the PropertySourcesPlaceholderConfigurer Spring bean prior to bean creation and can only be used in **@Value** annnotations.
 - Expressions starting with #. Spring Expression Language expressions parsed by a SpEL expression parser and evaluated by a SpEL expression instance.
+=
