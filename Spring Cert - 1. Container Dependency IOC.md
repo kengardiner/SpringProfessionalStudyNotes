@@ -1,9 +1,9 @@
 ## What is dependency injection and what are the advantages?
-Dependency injection is a design pattern that promotes loose coupling between the Spring components – that is, between the different collaborating POJOs. So by applying DI to your complex programming, your code will become simpler, easier to understand, and easier to test. 
+**Dependency injection** is a design pattern that promotes loose coupling between the Spring components – that is, between the different collaborating POJOs. So by applying DI to your complex programming, your code will become simpler, easier to understand, and easier to test. 
 
 According to the DI pattern, dependent objects are given their dependencies at the time of the creation of the objects by some factory or third party. This means that we have to focus on defining the dependencies instead of resolving the dependencies of collaborating objects in the enterprise application.
 
-Advantages:
+### Advantages:
 
 - Reduced coupling between the parts of an application.
 - Increased cohesion of the parts of an application.
@@ -31,7 +31,7 @@ Dependency injection (DI) and Inversion of Control (IoC) are both patterns.
 ## What is an interface and what are the advantages of making use of them in Java?
 
 ### A Java 8 and later interface is a reference type that can contain the following:
-  
+
 - Constants.
 - Method signatures (these are methods that have no implementation).
 - Default methods. A method with an implementation that, if not implemented in a class
@@ -53,21 +53,31 @@ interface(s).
 - Allows for use of the JDK dynamic proxying mechanism.
 - Allows for easier switching of Spring bean implementation.
 - Allows for hiding implementation. For instance, a service implemented in a module
-only have a public interface while the implementation is only visible within the module. Hiding the implementation also allows the developer to freely refactor code to methods, without having to fear that such methods will be visible outside of the module containing the implementation.
-  
+only have a public interface while the implementation is only visible within the module. 
+  - Hiding the implementation also allows the developer to freely refactor code to methods, without having to fear that such methods will be visible outside of the module containing the implementation.
 ## What is meant by “application-context”?
 
-In the Spring Framework, the org.springframework.beans.factory.BeanFactory interface provides the bean factory, which is a Spring IoC container. The bean factory is merely an object pool where objects are created and managed by configuration.
-The interface org.springframework.context.ApplicationContext is simply a wrapper of the bean factory, providing some extra application context services, such as support for AOP and, hence, declarative transaction, security, and instrumentation support such as support for message resources required for internationalization, and the ability to publish application events to interested event listeners.
-There can be more than one application context in a single Spring application. Multiple application contexts can be arranged in a parent-child hierarchy where the relation is directional from child context to parent context. Many child contexts can have one and the same parent context.
+In the Spring Framework, the org.springframework.beans.factory.BeanFactory interface provides the bean factory, which is a Spring IoC container. **The bean factory is merely an object pool where objects are created and managed by configuration.**
+
+The interface org.springframework.context. **ApplicationContext is simply a wrapper of the bean factory, providing some extra application context services, such as support for AOP** and, hence, declarative transaction, security, and instrumentation support such as support for message resources required for internationalization, and the ability to publish application events to interested event listeners.
+
+**There can be more than one application context in a single Spring application.** Multiple application contexts can be arranged in a parent-child hierarchy where the relation is directional from child context to parent context. **Many child contexts can have one and the same parent context.**
 
 ## What is the concept of a “container” and what is its lifecycle?
-Spring provides us with a container, and our application objects live in this Spring container. The Spring Container also wires the many Object together according to its configuration. It is configured with some initialized parameters, and manages their complete life cycle from start to finish.
+Spring provides us with a container, and our application objects live in this Spring container. The Spring Container also wires the many Objects together according to its configuration. It is configured with some initialized parameters, and manages their complete life cycle from start to finish.
 
 ### Basically, there are two distinct types of Spring container:
 
-	- Bean factory
-	- Application contexts
+### BeanFactory Container 
+
+This is the simplest container providing basic support for Dependency Injection and defined by the **org.springframework.beans.factory.BeanFactory** interface. The BeanFactory and related interfaces, such as BeanFactoryAware, InitializingBean, DisposableBean, are still present in Spring for the purposes of backward compatibility with the large number of third-party frameworks that integrate with Spring.
+
+ApplicationContext Container
+
+This container adds more enterprise-specific functionality such as the ability to resolve textual messages from a properties file and the ability to publish application events to interested event listeners. This container is defined by *the **org.springframework.context.ApplicationContext interface**.
+
+The **ApplicationContext container** includes all functionality of the BeanFactory container, so it is generally recommended over the BeanFactory. BeanFactory can still be used for light weight applications like mobile devices or applet based applications where data volume and speed is significant.
+
 #### Life-cycle of Spring container:
 
 1. Spring container is created as the application is started.
@@ -76,14 +86,14 @@ Spring provides us with a container, and our application objects live in this Sp
 4. Bean factory post-processors processes the bean definitions (BeanFactoryPostProcessor interface)
 5. Spring beans are instantiated by the container using the bean definitions.
 6. Spring beans are configured and assembled. Property values and dependencies are injected into the beans by the container.
- 
+
 7. Bean post-processors processes the beans in the container and any initialization callbacks are invoked on the beans. Bean post-processors are called both before and after any initialization callbacks are invoked on the bean. (BeanPostProcessor interface).
 8. The application runs.
 9. Application shut down is initialized.
 10. The Spring container is closed.
 11. Destruction callbacks are invoked on the singleton Spring beans in the container. In Spring, an object implementing the ApplicationContext interface is a container.
 
-## How are you going to create a new instance of an ApplicationContext?
+## How do you create a new instance of an ApplicationContext?
 Spring provides several flavors of application context as a bean container. There are multiple core implementations of the ApplicationContext interface:
 
 - FileSystemXmlApplicationContext
@@ -93,10 +103,17 @@ Spring provides several flavors of application context as a bean container. Ther
 Spring provides you with a web-aware implementation of the ApplicationContext interface, as shown here:
 
 - XmlWebApplicationContext
+
 - AnnotationConfigWebApplicationContext
 
-```ApplicationContext context = new FileSystemXmlApplicationContext("c:/knight.xml"); ApplicationContext context = new ClassPathXmlApplicationContext("knight.xml"); ApplicationContext context = new AnnotationConfigApplicationContext( com.springinaction.knights.config.KnightConfig.class);```
   
+
+  ```
+ApplicationContext context = new FileSystemXmlApplicationContext("c:/knight.xml"); 
+ApplicationContext context = new ClassPathXmlApplicationContext("knight.xml"); 
+ApplicationContext context = new AnnotationConfigApplicationContext(com.springinaction.knights.config.KnightConfig.class);
+  ```
+************************************************
 ## Can you describe the lifecycle of a Spring Bean in an ApplicationContext?
 ![](./StudyNoteImages/1_1.png)
 
@@ -110,14 +127,14 @@ BeanNameAware interface if any bean implements it.
 BeanFactoryAware if any bean implements it.
 7. Spring passes the reference of the application context itself to the
 setApplicationContext() method of ApplicationContextAware if any bean implements it.
- 
+
 8. BeanPostProcessor is an interface, and Spring allows you to implement it with your bean, and modifies the instance of the bean before the initializer is invoked in the Spring bean container by calling its postProcessBeforeInitialization().
 9. If your bean implements the InitializingBean interface, Spring calls its afterPropertiesSet() method to initialize any process or loading resource for your application. There are other methods to achieve this step, for example, you can use the init-method of the <bean> tag, the initMethod attribute of the @Bean annotation, and JSR 250's @PostConstruct annotation.
 10. BeanPostProcessor is an interface, and spring allows you to implement it with your bean. It modifies the instance of the bean after the initializer is invoked in the spring bean container by calling its postProcessAfterInitialization().
 11. Now your bean is ready to use in the step, and your application can access this bean by using the getBean() method of the application context. Your beans remain live in the application context until it is closed by calling the close() method of the application context.
 12. If your bean implements the DisposibleBean interface, Spring calls its destroy() method to destroy any process or clean up the resources of your application. There are other methods to achieve this step-for example, you can use the destroy-method of the <bean> tag, the destroyMethod attribute of the @Bean annotation, and JSR 250's @PreDestroy annotation.
 
-## How are you going to create an ApplicationContext in an integration test test?
+## How do you create an ApplicationContext in an integration test?
 
 Depending on whether JUnit 4 or JUnit 5 is used, the annotation @RunWith (JUnit 4) or @ExtendWith (JUnit 5) is used to annotate the test-class. In addition, the annotation @ContextConfiguration in both cases to specify either the XML configuration file(s) or the Java class(es) containing the Spring configuration to be loaded into the application context for the test.
 
@@ -345,7 +362,7 @@ The **CommonAnnotationBeanPostProcessor** support, among other annotations, the 
 When creating a Spring application context using an implementation that uses annotation-based configuration, for instance **AnnotationConfigApplicationContext**, a default **CommonAnnotationBeanPostProcessor** is automatically registered in the application context and no additional configuration is necessary to enable **@PostConstruct** and **@PreDestroy**.
 
 ## What is the behavior of the annotation @Autowired with regards to field injection, constructor injection and method injection?
-   
+
 The following are the types of dependency injections that could be injected into your application:
 
 - Constructor-based dependency injection
@@ -468,7 +485,7 @@ invokes another method on the same object.
 - If multiple layers of proxy objects are used, developers may need to take into account
 the order in which the proxies are applied
 - Proxy object may incur overhead
- 
+
 - Only methods with public visibility will be advised
 - Local or internal method calls within an advised class doesn’t get intercepted by
 proxy, so advise method of the aspect does not get fired/invoked
