@@ -72,7 +72,7 @@ Spring provides us with a container, and our application objects live in this Sp
 
 This is the simplest container providing basic support for Dependency Injection and defined by the **org.springframework.beans.factory.BeanFactory** interface. The BeanFactory and related interfaces, such as BeanFactoryAware, InitializingBean, DisposableBean, are still present in Spring for the purposes of backward compatibility with the large number of third-party frameworks that integrate with Spring.
 
-ApplicationContext Container
+### ApplicationContext Container
 
 This container adds more enterprise-specific functionality such as the ability to resolve textual messages from a properties file and the ability to publish application events to interested event listeners. This container is defined by *the **org.springframework.context.ApplicationContext interface**.
 
@@ -703,6 +703,7 @@ Spring Boot uses a very particular PropertySource order that is designed to allo
 
 Expressions in @Value annotations are of two types:
 
-- Expressions starting with $. Such expressions reference a property name in the application’s environment. These expressions are evaluated by the PropertySourcesPlaceholderConfigurer Spring bean prior to bean creation and can only be used in **@Value** annnotations.
-- Expressions starting with #. Spring Expression Language expressions parsed by a SpEL expression parser and evaluated by a SpEL expression instance.
-=
+### Expressions starting with $:
+Such expressions reference a property name in the application’s environment. These expressions are evaluated by the PropertySourcesPlaceholderConfigurer Spring bean prior to bean creation and can only be used in **@Value** annnotations.
+### Expressions starting with #: 
+Spring Expression Language expressions parsed by a SpEL expression parser and evaluated by a SpEL expression instance.
